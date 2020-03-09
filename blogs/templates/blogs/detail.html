@@ -1,0 +1,25 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
+
+<h1>文章标题：{{ article.article_title }}</h1>
+<li>正文内容：{{ article.article_content}}</li>
+<h1>***************************************************************************************</h1>
+<br/>
+<br/>
+<h1>评论区</h1>
+{% for comment in article.comment_set.all %}
+    <li>作者：{{ comment.comment_id }}      发布时间：{{comment.pub_date}}</li>
+    <li>{{ comment.comment_content }}</li>
+    <li>-----------------------------------------------------------------------------------</li>
+{% endfor %}
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'blogs:add' article.id %}" method="post">{% csrf_token %}
+    <label >ID：</label>
+    <input id="id" type="text" name="comment_id" placeholder="请输入ID" required/>
+    <br>
+    <label >评论内容：</label>
+    <input id="content" type="text" name="comment_content" placeholder="请输入评论内容" required/>
+    <br>
+    <input type="submit" value="发布">
+</form>

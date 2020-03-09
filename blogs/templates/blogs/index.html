@@ -1,0 +1,13 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
+
+<h1>博文列表</h1>
+{% if latest_article_list %}
+    <ul>
+    {% for article in latest_article_list %}
+        <li><a href="{% url 'blogs:detail' article.id %}">{{ article.article_title }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No blogs are available.</p>
+{% endif %}
